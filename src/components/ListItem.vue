@@ -22,7 +22,7 @@ export default {
 	components: { ItemMenu },
 	data() {
 		return {
-			
+
 		}
 	}
 }
@@ -85,7 +85,7 @@ export default {
 			background-color: #ECECF4;
 			
 			.item-menu {
-				display: inline-flex;
+				display: inline-block;
 			}
 		}
 	}
