@@ -69,11 +69,10 @@
 
 	.content {
 		width: 1373px;
-		height: 200px;
 		background-color: #FEFCFE;
 		margin: 0 auto;
 		transform: translateY(-148px);
 		border-radius: 5px;
-		box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25), -2px 4px 4px rgba(0, 0, 0, 0.25);
+		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25), -2px 2px 4px rgba(0, 0, 0, 0.25);
 	}
 </style>

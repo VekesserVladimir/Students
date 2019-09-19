@@ -7,17 +7,29 @@
     		</select>
 			<button class="button button_primary">Добавить студента</button>
 		</div>
-		<TableHeader v-bind:buttons="buttons"/>
+		<div class="table-header students-list__table-header">
+			<ColumnButton 
+				v-for='(button, index) in buttons'
+				v-bind:button="button"
+				v-bind:index='index'
+				v-bind:key='button.id'
+				v-on:changeSort='changeSort'
+			/>
+		</div>
 		<div class="underline"></div>
+		<ListItem v-for='student in studentsList' v-bind:key='student.id' v-bind:item="student"/>
 	</div>
 </template>
 
 <script>
-	import TableHeader from '../components/TableHeader'
+	import ColumnButton from '../components/ColumnButton'
+	import ListItem from '../components/ListItem'
+
 	export default {
 		name: 'StudentsList',
 		components: {
-			TableHeader
+			ColumnButton,
+			ListItem
 		},
 		data() {
 			return {
@@ -33,16 +45,16 @@
 					{
 						fullName: "Иванов Иван Иванович",
 						group: "бПИНЖ41",
-						formOfEducation: 'очная',
-						age: 20,
-						avgPoint: 4.5,
+						formOfEducation: 'заочная',
+						age: 19,
+						avgPoint: 4.2,
 						isDebtor: false
 					},
 					{
 						fullName: "Иванов Иван Иванович",
 						group: "бПИНЖ31",
 						formOfEducation: 'очная',
-						age: 20,
+						age: 21,
 						avgPoint: 4.5,
 						isDebtor: false
 					},
@@ -51,15 +63,15 @@
 						group: "бПИНЖ41",
 						formOfEducation: 'очная',
 						age: 20,
-						avgPoint: 4.5,
-						isDebtor: false
+						avgPoint: 4.7,
+						isDebtor: true
 					},
 					{
 						fullName: "Иванов Иван Иванович",
 						group: "бИФСТ31",
 						formOfEducation: 'очная',
 						age: 20,
-						avgPoint: 4.5,
+						avgPoint: 4.1,
 						isDebtor: false
 					}
 				],
@@ -94,7 +106,19 @@
 						isActive: false,
 						direction: "descending"
 					}
-				]
+				],
+				currentSortButton: 0
+			}
+		},
+		methods: {
+			changeSort(index, direction) {
+				this.buttons[index].isActive = true;
+				this.buttons[index].direction = direction;
+				if(index != this.currentSortButton) {
+					this.buttons[this.currentSortButton].isActive = false;
+					this.currentSortButton = index;
+				}
+				this.studentsList = this.getStudentsList;
 			}
 		},
 		computed: {
@@ -102,6 +126,12 @@
 				let tmp = [...new Set(this.studentsList.map(item => item.group))].sort();
 				tmp.unshift('Все группы');
 				return tmp;
+			},
+			getStudentsList() {
+				if(this.buttons[this.currentSortButton].direction == "descending") {
+					return this.studentsList.sort((a, b) => a[Object.keys(this.studentsList[0])[this.currentSortButton]] > b[Object.keys(this.studentsList[0])[this.currentSortButton]] ? 1 : -1);
+				}
+				return this.studentsList.sort((a, b) => a[Object.keys(this.studentsList[0])[this.currentSortButton]] < b[Object.keys(this.studentsList[0])[this.currentSortButton]] ? 1 : -1);
 			}
 		}
 	}
@@ -125,6 +155,28 @@
 
 		&__dropdown {
 			margin: 0 434px 0 50px;
+		}
+		.students-list__table-header {
+			button:nth-child(2) {
+				margin-left: 290px;
+			}
+			button:nth-child(3) {
+				margin-left: 76px;
+			}
+			button:nth-child(4) {
+				margin-left: 42px;
+			}
+			button:nth-child(5) {
+				margin-left: 38px;
+			}
+			button:nth-child(6) {
+				margin-left: 40px;
+			}
+		}
+
+		.table-header {
+			margin-top: 34px;
+			padding-left: 45px;
 		}
 	}
 </style>
