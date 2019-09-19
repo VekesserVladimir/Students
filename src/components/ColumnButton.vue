@@ -50,7 +50,7 @@ export default {
 		background-color: transparent;
 		cursor: pointer;
 		color: #9795B1;
-		font-size: 18px;
+		font-size: 17px;
 		font-weight: 600;
 		outline: none;
 

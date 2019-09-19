@@ -71,6 +71,7 @@
 		width: 1373px;
 		background-color: #FEFCFE;
 		margin: 0 auto;
+		// padding: 0 0 20px 0;
 		transform: translateY(-148px);
 		border-radius: 5px;
 		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25), -2px 2px 4px rgba(0, 0, 0, 0.25);

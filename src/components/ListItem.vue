@@ -7,18 +7,22 @@
 			<span class="item-value">{{ item.age }}</span>
 			<span class="item-value">{{ item.avgPoint }}</span>
 			<span class="item-value">{{ item.isDebtor ? "присутствуют" : "отсутствуют" }}</span>
+			<ItemMenu/>
 		</div>
 		<div class="underline"></div>
 	</div>
 </template>
 
 <script>
+import ItemMenu from '../components/ItemMenu'
+
 export default {
 	name: 'ListItem',
 	props: [ "item" ],
+	components: { ItemMenu },
 	data() {
 		return {
-
+			
 		}
 	}
 }
@@ -26,16 +30,18 @@ export default {
 
 <style lang="less" scoped>
 	.list-item {
-		padding-top: 21px;
 
 		.item-values-list {
+			height: 73px;
 			padding-left: 61px;
+			display: flex;
+			align-items: center;
 
 			.item-value {
-				font-size: 20px;
+				font-size: 19px;
 				line-height: 24px;
-				font-weight: 600;
-				color: #5E5E5E;
+				font-weight: 500;
+				color: rgb(71, 71, 71);
 				display: inline-flex;
 			}
 
@@ -47,36 +53,40 @@ export default {
 	
 			.item-value:nth-child(1) {
 				width: 301px;
-				color: #556CA4;
+				color: #517ddb;
 			}
 
 			.item-value:nth-child(2) {
-				margin-left: 18px;
+				margin-left: 19px;
 			}
 
 			.item-value:nth-child(3) {
-				margin-left: 68px;
+				margin-left: 71px;
 			}
 
 			.item-value:nth-child(4) {
-				margin-left: 43px;
+				margin-left: 46px;
 			}
 
 			.item-value:nth-child(5) {
-				margin-left: 23px;
+				margin-left: 27px;
 			}
 			
 			.item-value:nth-child(6) {
-				margin-left: 53px;
+				margin-left: 55px;
 			}
 		}
 
 		.underline {
-			margin-top: 23px;
+			margin-top: 0px;
 		}
 
 		&:hover {
 			background-color: #ECECF4;
+			
+			.item-menu {
+				display: inline-flex;
+			}
 		}
 	}
 </style>

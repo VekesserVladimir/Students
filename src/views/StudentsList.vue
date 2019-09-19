@@ -2,7 +2,7 @@
 	<div class='students-list'>
 		<div class='students-list__row'>
 			<span class="students-list__title">Список студентов</span>
-			<select class="dropdown students-list__dropdown">    
+			<select class="dropdown students-list__dropdown" v-model='group'>    
         		<option v-for='group in groups' v-bind:key="group.id">{{ group }}</option>
     		</select>
 			<button class="button button_primary">Добавить студента</button>
@@ -17,7 +17,7 @@
 			/>
 		</div>
 		<div class="underline"></div>
-		<ListItem v-for='student in studentsList' v-bind:key='student.id' v-bind:item="student"/>
+		<ListItem v-for='student in getStudentsList' v-bind:key='student.id' v-bind:item="student"/>
 	</div>
 </template>
 
@@ -33,6 +33,7 @@
 		},
 		data() {
 			return {
+				group: "Все группы",
 				studentsList: [
 					{
 						fullName: "Иванов Иван Иванович",
@@ -118,7 +119,6 @@
 					this.buttons[this.currentSortButton].isActive = false;
 					this.currentSortButton = index;
 				}
-				this.studentsList = this.getStudentsList;
 			}
 		},
 		computed: {
@@ -128,10 +128,18 @@
 				return tmp;
 			},
 			getStudentsList() {
-				if(this.buttons[this.currentSortButton].direction == "descending") {
-					return this.studentsList.sort((a, b) => a[Object.keys(this.studentsList[0])[this.currentSortButton]] > b[Object.keys(this.studentsList[0])[this.currentSortButton]] ? 1 : -1);
-				}
-				return this.studentsList.sort((a, b) => a[Object.keys(this.studentsList[0])[this.currentSortButton]] < b[Object.keys(this.studentsList[0])[this.currentSortButton]] ? 1 : -1);
+				let propertyName = Object.keys(this.studentsList[0])[this.currentSortButton];
+				let tmpList;
+
+				if(this.buttons[this.currentSortButton].direction == "descending")
+					tmpList = this.studentsList.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+				else 
+					tmpList = this.studentsList.sort((a, b) => a[propertyName] > b[propertyName] ? -1 : 1);
+					
+				if(this.group == 'Все группы')
+					return tmpList;
+				else 
+					return tmpList.filter(student => student.group == this.group);
 			}
 		}
 	}
@@ -158,19 +166,19 @@
 		}
 		.students-list__table-header {
 			button:nth-child(2) {
-				margin-left: 290px;
+				margin-left: 295px;
 			}
 			button:nth-child(3) {
-				margin-left: 76px;
+				margin-left: 84px;
 			}
 			button:nth-child(4) {
-				margin-left: 42px;
+				margin-left: 50px;
 			}
 			button:nth-child(5) {
-				margin-left: 38px;
+				margin-left: 45px;
 			}
 			button:nth-child(6) {
-				margin-left: 40px;
+				margin-left: 47px;
 			}
 		}
 
