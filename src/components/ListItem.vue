@@ -7,7 +7,7 @@
 			<span class="item-value">{{ item.age }}</span>
 			<span class="item-value">{{ item.avgPoint }}</span>
 			<span class="item-value">{{ item.isDebtor ? "присутствуют" : "отсутствуют" }}</span>
-			<ItemMenu/>
+			<ItemMenu v-on:delete-item='deleteItem'/>
 		</div>
 		<div class="underline"></div>
 	</div>
@@ -18,11 +18,16 @@ import ItemMenu from '../components/ItemMenu'
 
 export default {
 	name: 'ListItem',
-	props: [ "item" ],
+	props: [ "item", "index" ],
 	components: { ItemMenu },
 	data() {
 		return {
 
+		}
+	},
+	methods: {
+		deleteItem() {
+			this.$emit("delete-item", this.index);
 		}
 	}
 }
@@ -30,6 +35,11 @@ export default {
 
 <style lang="less" scoped>
 	.list-item {
+		&:last-child {
+			.underline {
+				display: none;
+			}
+		}
 
 		.item-values-list {
 			height: 73px;

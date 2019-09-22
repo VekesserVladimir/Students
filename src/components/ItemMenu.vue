@@ -3,15 +3,14 @@
 		<button class="item-menu__button" 
 			v-bind:class='{ "item-menu__button_active" : isActive }'
 			v-on:click='isActive = !isActive'
-			v-on:mouseleave='isActive = false'
 		>
 			<div class="item-menu__dot"></div>
 			<div class="item-menu__dot"></div>
 			<div class="item-menu__dot"></div>
 		</button>
-		<div class="item-menu__menu">
-			<button class="item-menu__menu-button">Изменить</button>
-			<button class="item-menu__menu-button">Удалить</button>
+		<div class="item-menu__menu" v-bind:class='{ "item-menu__menu_active" : isActive }'>
+			<button class="item-menu__menu-button" v-on:click='changeItem'>Изменить</button>
+			<button class="item-menu__menu-button" v-on:click='deleteItem'>Удалить</button>
 		</div>
 	</div>
 </template>
@@ -22,6 +21,14 @@ export default {
 	data() {
 		return {
 			isActive: false
+		}
+	},
+	methods: {
+		changeItem() {
+			
+		},
+		deleteItem() {
+			this.$emit('delete-item');
 		}
 	}
 }
@@ -42,6 +49,13 @@ export default {
 			left: -85px;
 			top: 19px;
 			z-index: 2;
+			transform-origin: top right;
+			transform: scale(0.1);
+			transition: transform 0.1s ease-in-out;
+
+			&_active {
+				transform: scale(1);
+			}
 
 			&-button {
 				cursor: pointer;
@@ -53,6 +67,7 @@ export default {
 				background-color: transparent;
 				font-size: 14px;
 				font-weight: 500;
+				outline: none;
 
 				&:hover {
 					background-color: #ECECF4;
@@ -86,6 +101,7 @@ export default {
 			cursor: pointer;
 			outline: none;
 			transition: background-color 0.1s ease-in-out;
+			position: relative;
 			z-index: 5;
 
 			&_active {

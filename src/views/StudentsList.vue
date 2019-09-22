@@ -1,5 +1,6 @@
 <template>
 	<div class='students-list'>
+		<DialogWindow ref='dialogWindow' v-on:answer='deleteStudent'/>
 		<div class='students-list__row'>
 			<span class="students-list__title">Список студентов</span>
 			<select class="dropdown students-list__dropdown" v-model='group'>    
@@ -17,19 +18,27 @@
 			/>
 		</div>
 		<div class="underline"></div>
-		<ListItem v-for='student in getStudentsList' v-bind:key='student.id' v-bind:item="student"/>
+		<ListItem 
+			v-for='(student, index) in getStudentsList' 
+			v-bind:key='student.id' 
+			v-bind:item="student"
+			v-bind:index='index'
+			v-on:delete-item='askPermission'
+		/>
 	</div>
 </template>
 
 <script>
 	import ColumnButton from '../components/ColumnButton'
 	import ListItem from '../components/ListItem'
+	import DialogWindow from '@/components/DialogWindow'
 
 	export default {
 		name: 'StudentsList',
 		components: {
 			ColumnButton,
-			ListItem
+			ListItem,
+			DialogWindow
 		},
 		data() {
 			return {
@@ -119,6 +128,12 @@
 					this.buttons[this.currentSortButton].isActive = false;
 					this.currentSortButton = index;
 				}
+			},
+			askPermission(index) {
+				this.$refs.dialogWindow.ask(this.studentsList[index].fullName, "student", index);
+			},
+			deleteStudent(index) {
+				this.studentsList.splice(index, 1);
 			}
 		},
 		computed: {
@@ -148,6 +163,7 @@
 <style lang="less" scoped>
 	.students-list {
 		padding-top: 32px;
+
 		&__row {
 			display: flex;
 			align-items: center;
