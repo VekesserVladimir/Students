@@ -11,4 +11,7 @@ export default class Group {
 	deleteStudent(student) {
 		this.listOfStudents.splice(this.listOfStudents.indexOf(student), 1);
 	}
+	getValues() {
+		//return [ this.specialty, this.listOfStudents.length, , this. ];
+	}
 }

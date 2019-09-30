@@ -52,7 +52,6 @@ export default {
 		color: #9795B1;
 		font-size: 17px;
 		font-weight: 600;
-		outline: none;
 
 		&_active {
 			color: #1D1D1D;

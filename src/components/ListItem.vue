@@ -1,13 +1,16 @@
 <template>
-	<div class="list-item">
+	<div class="list-item" v-bind:class="{ 'list-item_active' : isActive }">
 		<div class="item-values-list">
-			<span class="item-value">{{ item.fullName }}</span>
-			<span class="item-value">{{ item.group }}</span>
-			<span class="item-value">{{ item.formOfEducation }}</span>
-			<span class="item-value">{{ item.age }}</span>
-			<span class="item-value">{{ item.avgPoint }}</span>
-			<span class="item-value">{{ item.isDebtor ? "присутствуют" : "отсутствуют" }}</span>
-			<ItemMenu v-on:delete-item='deleteItem'/>
+			<span 
+				class="item-value"
+				v-for="value in item"
+				v-bind:key='value.key'
+			>{{ value }}</span>
+			<ItemMenu 
+				v-on:delete-item='deleteItem'
+				v-on:change-item='changeItem'
+				v-on:active-item='activeItem'
+			/>
 		</div>
 		<div class="underline"></div>
 	</div>
@@ -22,12 +25,18 @@ export default {
 	components: { ItemMenu },
 	data() {
 		return {
-
+			isActive: false
 		}
 	},
 	methods: {
 		deleteItem() {
 			this.$emit("delete-item", this.index);
+		},
+		changeItem() {
+			this.$emit("change-item", this.index);
+		},
+		activeItem() {
+			this.isActive = !this.isActive;
 		}
 	}
 }
@@ -92,6 +101,14 @@ export default {
 		}
 
 		&:hover {
+			background-color: #ECECF4;
+			
+			.item-menu {
+				display: inline-block;
+			}
+		}
+
+		&_active {
 			background-color: #ECECF4;
 			
 			.item-menu {

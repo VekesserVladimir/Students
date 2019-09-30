@@ -1,5 +1,5 @@
 <template>
-	<div class="dialog-background" v-show="isActive">
+	<div class="dark-background" v-show="isActive">
 		<div class="dialog-window">
 			<font-awesome-icon 
 				icon='trash-alt'
@@ -36,7 +36,7 @@ export default {
 			this.index = index;
 		},
 		confirm() {
-			this.$emit('answer', true, this.index);
+			this.$emit('answer', this.index);
 			this.isActive = false;
 		},
 		reject() {
@@ -47,72 +47,59 @@ export default {
 </script>
 
 <style lang="less" scoped>
-	.dialog-background {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: #333333b7;
-		z-index: 10;
+	.dialog-window {
+		width: 450px;
+		background-color: #fff;
+		margin-bottom: 130px;
+		border-radius: 5px;
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
 		align-items: center;
 
-		.dialog-window {
-			width: 450px;
-			background-color: #fff;
-			margin-bottom: 130px;
-			border-radius: 5px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
+		&__icon {
+			margin-top: 30px;
+			font-size: 50px;
+			color: #ff7c7c;
+		}
 
-			&__icon {
-				margin-top: 30px;
-				font-size: 50px;
-				color: #ff7c7c;
-			}
+		&__message {
+			margin-top: 20px;
+			font-weight: 500;
+			padding: 0 20px;
+			text-align: center;
+			line-height: 22px;
 
-			&__message {
-				margin-top: 20px;
-				font-weight: 500;
-				padding: 0 20px;
-				text-align: center;
-				line-height: 22px;
-
-				.target-name {
-					font-weight: 600;
-				}
-			}
-
-			&__wrapper {
-				width: 230px;
-				display: flex;
-				justify-content: space-between;
-				margin-top: 27px;
-				margin-bottom: 25px;
-			}
-			
-			&__button {
-				width: 100px;
-				height: 35px;
-				border: none;
+			.target-name {
 				font-weight: 600;
-				border-radius: 5px;
-				cursor: pointer;
-				outline: none;
+			}
+		}
 
-				&:nth-child(1) {
-					background-color: #fff;
-					color: #ff7c7c;
-					box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-				}
+		&__wrapper {
+			width: 230px;
+			display: flex;
+			justify-content: space-between;
+			margin-top: 27px;
+			margin-bottom: 25px;
+		}
+			
+		&__button {
+			width: 100px;
+			height: 35px;
+			border: none;
+			font-weight: 600;
+			font-size: 14px;
+			border-radius: 5px;
+			cursor: pointer;
 
-				&:nth-child(2) {
-					background-color: #ff7c7c;
-					color: #fff;
-				}
+			&:nth-child(1) {
+				background-color: #fff;
+				color: #ff7c7c;
+				box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+			}
+
+			&:nth-child(2) {
+				background-color: #ff7c7c;
+				color: #fff;
 			}
 		}
 	}

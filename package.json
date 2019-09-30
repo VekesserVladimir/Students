@@ -13,7 +13,8 @@
     "@fortawesome/vue-fontawesome": "^0.1.7",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
-    "vue-visible": "^1.0.2"
+    "vue-visible": "^1.0.2",
+    "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "^3.11.0",

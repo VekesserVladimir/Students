@@ -1,12 +1,26 @@
 <template>
 	<div class='students-list'>
-		<DialogWindow ref='dialogWindow' v-on:answer='deleteStudent'/>
+		<DialogWindow 
+			ref='dialogWindow' 
+			v-on:answer='deleteStudent'
+		/>
+		<Form 
+			ref='form'
+			v-bind:groups='groups'
+			v-on:addStudent='addStudent'
+			v-on:changeStudent='changeStudent'
+		/>
 		<div class='students-list__row'>
 			<span class="students-list__title">Список студентов</span>
 			<select class="dropdown students-list__dropdown" v-model='group'>    
-        		<option v-for='group in groups' v-bind:key="group.id">{{ group }}</option>
+        		<option v-for='group in allGroups' v-bind:key="group.id">{{ group }}</option>
     		</select>
-			<button class="button button_primary">Добавить студента</button>
+			<button
+				class="button button_primary"
+				v-on:click='activeForm'
+			>
+				Добавить студента
+			</button>
 		</div>
 		<div class="table-header students-list__table-header">
 			<ColumnButton 
@@ -21,69 +35,39 @@
 		<ListItem 
 			v-for='(student, index) in getStudentsList' 
 			v-bind:key='student.id' 
-			v-bind:item="student"
+			v-bind:item="student.getValues()"
 			v-bind:index='index'
 			v-on:delete-item='askPermission'
+			v-on:change-item='activeForm'
 		/>
 	</div>
 </template>
 
 <script>
-	import ColumnButton from '../components/ColumnButton'
-	import ListItem from '../components/ListItem'
-	import DialogWindow from '@/components/DialogWindow'
+	import ColumnButton from '../components/ColumnButton';
+	import ListItem from '../components/ListItem';
+	import DialogWindow from '../components/DialogWindow';
+	import Form from '../components/Form';
+	import Student from '../entities/Student'
 
 	export default {
 		name: 'StudentsList',
 		components: {
 			ColumnButton,
 			ListItem,
-			DialogWindow
+			DialogWindow,
+			Form
 		},
 		data() {
 			return {
 				group: "Все группы",
 				studentsList: [
-					{
-						fullName: "Иванов Иван Иванович",
-						group: "бПИНЖ31",
-						formOfEducation: 'очная',
-						age: 20,
-						avgPoint: 4.5,
-						isDebtor: false
-					},
-					{
-						fullName: "Иванов Иван Иванович",
-						group: "бПИНЖ41",
-						formOfEducation: 'заочная',
-						age: 19,
-						avgPoint: 4.2,
-						isDebtor: false
-					},
-					{
-						fullName: "Иванов Иван Иванович",
-						group: "бПИНЖ31",
-						formOfEducation: 'очная',
-						age: 21,
-						avgPoint: 4.5,
-						isDebtor: false
-					},
-					{
-						fullName: "Иванов Иван Иванович",
-						group: "бПИНЖ41",
-						formOfEducation: 'очная',
-						age: 20,
-						avgPoint: 4.7,
-						isDebtor: true
-					},
-					{
-						fullName: "Иванов Иван Иванович",
-						group: "бИФСТ31",
-						formOfEducation: 'очная',
-						age: 20,
-						avgPoint: 4.1,
-						isDebtor: false
-					}
+					new Student("Иванов Иван Иванович", "бПИНЖ31", "очная", new Date(2000, 9, 1), 4.3, false),
+					new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(1998, 5, 2), 4.5, false),
+					new Student("Иванов Иван Иванович", "бПИНЖ21", "очная", new Date(2001, 2, 25), 4.2, false),
+					new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(1999, 1, 2), 4.5, false),
+					new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(2000, 2, 7), 4.4, true),
+					new Student("Иванов Иван Иванович", "бПИНЖ41", "заочная", new Date(2000, 3, 11), 4.1, false)
 				],
 				buttons: [
 					{
@@ -134,10 +118,25 @@
 			},
 			deleteStudent(index) {
 				this.studentsList.splice(index, 1);
+			},
+			activeForm(index) {
+				if(typeof index == "number") {
+					this.$refs.form.active("change", this.studentsList[index], index);
+				} else
+					this.$refs.form.active("create");
+			},
+			addStudent(student) {
+				this.studentsList.push(student);
+			},
+			changeStudent(student, index) {
+				this.studentsList.splice(index, 1, student);
 			}
 		},
 		computed: {
 			groups() {
+				return [...new Set(this.studentsList.map(item => item.group))].sort();
+			},
+			allGroups() {
 				let tmp = [...new Set(this.studentsList.map(item => item.group))].sort();
 				tmp.unshift('Все группы');
 				return tmp;
@@ -178,7 +177,7 @@
 		}
 
 		&__dropdown {
-			margin: 0 434px 0 50px;
+			margin: 2px 434px 0 50px;
 		}
 		.students-list__table-header {
 			button:nth-child(2) {
@@ -199,7 +198,7 @@
 		}
 
 		.table-header {
-			margin-top: 34px;
+			margin-top: 40px;
 			padding-left: 45px;
 		}
 	}

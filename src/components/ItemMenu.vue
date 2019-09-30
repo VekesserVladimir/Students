@@ -1,14 +1,18 @@
 <template>
 	<div class='item-menu'>
-		<button class="item-menu__button" 
+		<button 
+			class="item-menu__button" 
 			v-bind:class='{ "item-menu__button_active" : isActive }'
-			v-on:click='isActive = !isActive'
+			v-on:click='activeItem'
 		>
 			<div class="item-menu__dot"></div>
 			<div class="item-menu__dot"></div>
 			<div class="item-menu__dot"></div>
 		</button>
-		<div class="item-menu__menu" v-bind:class='{ "item-menu__menu_active" : isActive }'>
+		<div 
+			class="item-menu__menu" 
+			v-bind:class='{ "item-menu__menu_active" : isActive }'
+		>
 			<button class="item-menu__menu-button" v-on:click='changeItem'>Изменить</button>
 			<button class="item-menu__menu-button" v-on:click='deleteItem'>Удалить</button>
 		</div>
@@ -25,10 +29,15 @@ export default {
 	},
 	methods: {
 		changeItem() {
-			
+			this.$emit('change-item');
 		},
 		deleteItem() {
 			this.$emit('delete-item');
+		},
+		activeItem() {
+			this.isActive = !this.isActive;
+
+			this.$emit("active-item");
 		}
 	}
 }
@@ -67,7 +76,6 @@ export default {
 				background-color: transparent;
 				font-size: 14px;
 				font-weight: 500;
-				outline: none;
 
 				&:hover {
 					background-color: #ECECF4;
@@ -99,7 +107,6 @@ export default {
 			justify-content: center;
 			padding: 0;
 			cursor: pointer;
-			outline: none;
 			transition: background-color 0.1s ease-in-out;
 			position: relative;
 			z-index: 5;
