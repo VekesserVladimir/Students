@@ -37,6 +37,7 @@ export default {
 		},
 		activeItem() {
 			this.isActive = !this.isActive;
+			console.log(this.item);
 		}
 	}
 }
@@ -61,6 +62,7 @@ export default {
 				line-height: 24px;
 				font-weight: 500;
 				color: rgb(71, 71, 71);
+				//color: rgb(0, 0, 0);
 				display: inline-flex;
 			}
 

@@ -83,7 +83,6 @@ export default {
 	props: [ "groups" ],
 	data() {
 		return {
-			index: undefined,
 			item: undefined,
 			isActive: false,
 			ru: ru,
@@ -105,10 +104,9 @@ export default {
 		}
 	},
 	methods: {
-		active(mode, item, index) {
+		active(mode, item) {
 			this.isActive = true;
 			this.mode = mode;
-			this.index = index;
 			if(this.mode == 'change') {
 				this.fullName = item.fullName;
 				this.group = item.group;
@@ -165,7 +163,7 @@ export default {
 				this.isDebtor = "отсутствуют";
 				if(this.mode == "create") {
 					this.$emit("addStudent", student);
-				} else this.$emit("changeStudent", student, this.index);
+				} else this.$emit("changeStudent", student);
 			}
 		}
 	}

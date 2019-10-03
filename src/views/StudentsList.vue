@@ -48,7 +48,6 @@
 	import ListItem from '../components/ListItem';
 	import DialogWindow from '../components/DialogWindow';
 	import Form from '../components/Form';
-	import Student from '../entities/Student'
 
 	export default {
 		name: 'StudentsList',
@@ -58,17 +57,10 @@
 			DialogWindow,
 			Form
 		},
+		props: [ "studentsList", "list" ],
 		data() {
 			return {
 				group: "Все группы",
-				studentsList: [
-					new Student("Иванов Иван Иванович", "бПИНЖ31", "очная", new Date(2000, 9, 1), 4.3, false),
-					new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(1998, 5, 2), 4.5, false),
-					new Student("Иванов Иван Иванович", "бПИНЖ21", "очная", new Date(2001, 2, 25), 4.2, false),
-					new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(1999, 1, 2), 4.5, false),
-					new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(2000, 2, 7), 4.4, true),
-					new Student("Иванов Иван Иванович", "бПИНЖ41", "заочная", new Date(2000, 3, 11), 4.1, false)
-				],
 				buttons: [
 					{
 						name: 'ФИО',
@@ -126,10 +118,10 @@
 					this.$refs.form.active("create");
 			},
 			addStudent(student) {
-				this.studentsList.push(student);
+				this.$emit("addStudent", student);
 			},
-			changeStudent(student, index) {
-				this.studentsList.splice(index, 1, student);
+			changeStudent(student) {
+				this.$emit(changeStudent, student);
 			}
 		},
 		computed: {

@@ -17,17 +17,47 @@
 			</div>
 		</div>
 		<div class="content">
-			<router-view></router-view>
+			<router-view 
+				v-bind:studentsList="currentPage == 'students' ? getStudentsList : groupsList"
+				v-on:addStudent='addStudent'
+				v-on:changeStudent='changeStudent'
+			></router-view>
 		</div>
 	</div>
 </template>
 
 <script>
+	import Student from './entities/Student'
+	import Group from './entities/Group'
+
 	export default {
 		name: 'App',
 		data() {
 			return {
-				currentPage: ''
+				currentPage: '',
+				groupsList: [
+					new Group("бПИНЖ41", "бакалавриат", "4", [ 
+						new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(1999, 1, 2), 4.5, false),
+						new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(2000, 2, 7), 4.4, true),
+						new Student("Иванов Иван Иванович", "бПИНЖ41", "заочная", new Date(2000, 3, 11), 4.1, false),
+						new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(1998, 5, 2), 4.5, false),
+
+					 ]),
+					new Group("бПИНЖ31", "бакалавриат", "3", [ 
+						new Student("Иванов Иван Иванович", "бПИНЖ31", "очная", new Date(2000, 9, 1), 4.3, false),
+						new Student("Иванов Иван Иванович", "бПИНЖ31", "очная", new Date(1999, 5, 12), 4.3, false),
+
+					 ]),
+					new Group("бПИНЖ21", "бакалавриат", "2", [ 
+						new Student("Иванов Иван Иванович", "бПИНЖ21", "очная", new Date(2001, 2, 25), 4.2, false),
+					 ]),
+					new Group("бПИНЖ11", "бакалавриат", "1", [ 
+						new Student("Иванов Иван Иванович", "бПИНЖ11", "очная", new Date(2001, 2, 25), 4.2, false),
+					 ]),
+					new Group("бИВЧТ41", "бакалавриат", "4", [ 
+						new Student("Иванов Иван Иванович", "бИВЧТ41", "очная", new Date(2001, 2, 25), 4.2, false),
+					 ]),
+				]
 			}
 		},
 		beforeMount() {
@@ -45,6 +75,25 @@
 		methods: {
 			changePage(value) {
 				this.currentPage = value;
+			},
+			addStudent(student) {
+				this.groupsList.forEach(item => {
+					if(item.specialty == student.group) item.listOfStudents.push(student);
+				})
+			},
+			changeStudent(student) {
+				
+			}
+		},
+		computed: {
+			getStudentsList() {
+				let list = [];
+				this.groupsList.forEach(group => {
+					group.listOfStudents.forEach(student => {
+						list.push(student);
+					})
+				})
+				return list;
 			}
 		}
 	}

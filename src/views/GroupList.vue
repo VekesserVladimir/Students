@@ -44,7 +44,6 @@
 	import ListItem from '../components/ListItem';
 	import DialogWindow from '../components/DialogWindow';
 	import Form from '../components/Form';
-	import Group from '../entities/Group'
 
 	export default {
 		name: 'StudentsList',
@@ -56,13 +55,6 @@
 		},
 		data() {
 			return {
-				groupsList: [
-					new Group("бПИНЖ41", "бакалавриат", "4", [ {} ]),
-					new Group("бПИНЖ31", "бакалавриат", "3", [ {} ]),
-					new Group("бПИНЖ21", "бакалавриат", "2", [ {} ]),
-					new Group("бПИНЖ11", "бакалавриат", "1", [ {} ]),
-					new Group("бИВЧТ41", "бакалавриат", "4", [ {} ]),
-				],
 				buttons: [
 					{
 						name: 'Направление',
@@ -119,12 +111,11 @@
 		computed: {
 			getGroupsList() {
 				let propertyName = Object.keys(this.groupsList[0])[this.currentSortButton];
-				let tmpList;
 
-				if(this.buttons[this.currentSortButton].direction == "descending")
+				if(this.buttons[this.currentSortButton].direction == "descending") 
 					return this.groupsList.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
 				else 
-					return this.groupsList.sort((a, b) => a[propertyName] > b[propertyName] ? -1 : 1);		
+					return this.groupsList.sort((a, b) => a[propertyName] > b[propertyName] ? -1 : 1);
 			}
 		}
 	}
