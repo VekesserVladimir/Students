@@ -121,7 +121,7 @@
 				this.$emit("addStudent", student);
 			},
 			changeStudent(student) {
-				this.$emit(changeStudent, student);
+				this.$emit("changeStudent", student);
 			}
 		},
 		computed: {

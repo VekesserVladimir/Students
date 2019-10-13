@@ -87,6 +87,7 @@ export default {
 			isActive: false,
 			ru: ru,
 			mode: "",
+			id: "",
 			fullName: "",
 			group: "",
 			formOfEducation: "очная",
@@ -108,6 +109,7 @@ export default {
 			this.isActive = true;
 			this.mode = mode;
 			if(this.mode == 'change') {
+				this.id = item.id;
 				this.fullName = item.fullName;
 				this.group = item.group;
 				this.formOfEducation = item.formOfEducation;
@@ -148,7 +150,8 @@ export default {
 			}
 
 			if(!flag) {
-				let student = new Student(this.fullName, 
+				let student = new Student(this.id,
+										  this.fullName, 
 										  this.group, 
 										  this.formOfEducation, 
 										  this.dateOfBirth, 

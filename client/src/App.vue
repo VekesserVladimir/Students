@@ -37,25 +37,24 @@
 				currentPage: '',
 				groupsList: [
 					new Group("бПИНЖ41", "бакалавриат", "4", [ 
-						new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(1999, 1, 2), 4.5, false),
-						new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(2000, 2, 7), 4.4, true),
-						new Student("Иванов Иван Иванович", "бПИНЖ41", "заочная", new Date(2000, 3, 11), 4.1, false),
-						new Student("Иванов Иван Иванович", "бПИНЖ41", "очная", new Date(1998, 5, 2), 4.5, false),
-
+						new Student(1, "Иванов Иван Иванович1", "бПИНЖ41", "очная", new Date(1999, 1, 2), 4.5, false),
+						new Student(2, "Иванов Иван Иванович2", "бПИНЖ41", "очная", new Date(2000, 2, 7), 4.4, true),
+						new Student(3, "Иванов Иван Иванович3", "бПИНЖ41", "заочная", new Date(2000, 3, 11), 4.1, false),
+						new Student(4, "Иванов Иван Иванович4", "бПИНЖ41", "очная", new Date(1998, 5, 2), 4.5, false),
 					 ]),
 					new Group("бПИНЖ31", "бакалавриат", "3", [ 
-						new Student("Иванов Иван Иванович", "бПИНЖ31", "очная", new Date(2000, 9, 1), 4.3, false),
-						new Student("Иванов Иван Иванович", "бПИНЖ31", "очная", new Date(1999, 5, 12), 4.3, false),
+						new Student(5, "Иванов Иван Иванович5", "бПИНЖ31", "очная", new Date(2000, 9, 1), 4.3, false),
+						new Student(6, "Иванов Иван Иванович6", "бПИНЖ31", "очная", new Date(1999, 5, 12), 4.3, false),
 
 					 ]),
 					new Group("бПИНЖ21", "бакалавриат", "2", [ 
-						new Student("Иванов Иван Иванович", "бПИНЖ21", "очная", new Date(2001, 2, 25), 4.2, false),
+						new Student(7, "Иванов Иван Иванович7", "бПИНЖ21", "очная", new Date(2001, 2, 25), 4.2, false),
 					 ]),
 					new Group("бПИНЖ11", "бакалавриат", "1", [ 
-						new Student("Иванов Иван Иванович", "бПИНЖ11", "очная", new Date(2001, 2, 25), 4.2, false),
+						new Student(8, "Иванов Иван Иванович8", "бПИНЖ11", "очная", new Date(2001, 2, 25), 4.2, false),
 					 ]),
 					new Group("бИВЧТ41", "бакалавриат", "4", [ 
-						new Student("Иванов Иван Иванович", "бИВЧТ41", "очная", new Date(2001, 2, 25), 4.2, false),
+						new Student(9, "Иванов Иван Иванович9", "бИВЧТ41", "очная", new Date(2001, 2, 25), 4.2, false),
 					 ]),
 				]
 			}
@@ -77,12 +76,22 @@
 				this.currentPage = value;
 			},
 			addStudent(student) {
-				this.groupsList.forEach(item => {
-					if(item.specialty == student.group) item.listOfStudents.push(student);
+				this.groupsList.forEach(group => {
+					if(group.specialty == student.group) group.listOfStudents.push(student);
 				})
 			},
 			changeStudent(student) {
-				
+				this.groupsList.forEach(group => {
+					group.listOfStudents.forEach((item, index) => {
+						if(item.id == student.id) {
+							console.log(group.listOfStudents[index]);
+
+							group.listOfStudents.splice(index, 1, student);
+
+							console.log(group.listOfStudents[index]);
+						}
+					})
+				})
 			}
 		},
 		computed: {

@@ -1,5 +1,6 @@
 export default class Student {
-	constructor(fullName, group, formOfEducation, dateOfBirth, avgMark, isDebtor) {
+	constructor(id, fullName, group, formOfEducation, dateOfBirth, avgMark, isDebtor) {
+		this.id = id;
 		this.fullName = fullName;
 		this.avgMark = avgMark;
 		this.formOfEducation = formOfEducation;

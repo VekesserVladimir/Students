@@ -37,7 +37,6 @@ export default {
 		},
 		activeItem() {
 			this.isActive = !this.isActive;
-			console.log(this.item);
 		}
 	}
 }

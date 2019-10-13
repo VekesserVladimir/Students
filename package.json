@@ -1,16 +1,17 @@
 {
-  "name": "students-client",
+  "name": "students",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "dev": "vue-cli-service serve --open client/src/main.js && nodemon server/index.js",
+    "build": "vue-cli-service build client/src/main.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.22",
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
     "@fortawesome/vue-fontawesome": "^0.1.7",
+    "express": "^4.17.1",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vue-visible": "^1.0.2",
