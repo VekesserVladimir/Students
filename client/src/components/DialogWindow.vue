@@ -23,20 +23,21 @@ export default {
 	data() {
 		return {
 			isActive: false,
+			item: "",
 			name: "",
-			mode: "",
-			index: ""
+			mode: ""
 		}
 	},
 	methods: {
-		ask(name, mode, index) {
+		ask(item, mode) {
 			this.isActive = true;
-			this.name = name;
+			this.item = item;
+			if(mode == 'student') this.name = item.fullName;
+				else this.name = item.specialty
 			this.mode = mode;
-			this.index = index;
 		},
 		confirm() {
-			this.$emit('answer', this.index);
+			this.$emit('answer', this.item);
 			this.isActive = false;
 		},
 		reject() {

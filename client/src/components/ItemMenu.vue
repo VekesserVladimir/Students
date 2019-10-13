@@ -1,5 +1,8 @@
 <template>
-	<div class='item-menu'>
+	<div 
+		class='item-menu'
+		v-click-outside="hide"	
+	>
 		<button 
 			class="item-menu__button" 
 			v-bind:class='{ "item-menu__button_active" : isActive }'
@@ -20,6 +23,8 @@
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside'
+
 export default {
 	name: "ItemMenu",
 	data() {
@@ -38,7 +43,14 @@ export default {
 			this.isActive = !this.isActive;
 
 			this.$emit("active-item");
+		},
+		hide() {
+			this.isActive = false;
+			this.$emit('disable-item');
 		}
+	},
+	directives: {
+    	ClickOutside
 	}
 }
 </script>

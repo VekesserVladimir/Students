@@ -8,7 +8,7 @@
 			class="title-arrow" 
 			icon='sort-down'
 			v-visible='button.isActive'
-			v-if='button.direction == "descending"'
+			v-if='button.direction'
 		/>
 		<font-awesome-icon  
 			class="title-arrow" 
@@ -33,9 +33,9 @@ export default {
 		changeSort() {
 			let direction;
 			if(this.button.isActive) {
-				this.button.direction == 'descending' ? direction = 'ascending' : direction = 'descending';
+				this.button.direction ? direction = false : direction = true;
 			} else {
-				direction = 'descending';
+				direction = true;
 			}
 			this.$emit("changeSort", this.index, direction);
 		}

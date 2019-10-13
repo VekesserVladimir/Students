@@ -35,7 +35,7 @@
 		<ListItem 
 			v-for='(student, index) in getStudentsList' 
 			v-bind:key='student.id' 
-			v-bind:item="student.getValues()"
+			v-bind:item="student"
 			v-bind:index='index'
 			v-on:delete-item='askPermission'
 			v-on:change-item='activeForm'
@@ -57,7 +57,7 @@
 			DialogWindow,
 			Form
 		},
-		props: [ "studentsList", "list" ],
+		props: [ "itemsList", "list" ],
 		data() {
 			return {
 				group: "Все группы",
@@ -65,39 +65,39 @@
 					{
 						name: 'ФИО',
 						isActive: true,
-						direction: "descending"
+						direction: true
 					},
 					{
 						name: 'Группа',
 						isActive: false,
-						direction: "descending"
+						direction: true
 					},
 					{
 						name: 'Форма обучения',
 						isActive: false,
-						direction: "descending"
+						direction: true
 					},
 					{
 						name: 'Возраст',
 						isActive: false,
-						direction: "descending"
+						direction: true
 					},
 					{
 						name: 'Средний балл',
 						isActive: false,
-						direction: "descending"
+						direction: true
 					},
 					{
 						name: 'Задолжности',
 						isActive: false,
-						direction: "descending"
+						direction: true
 					}
 				],
 				currentSortButton: 0
 			}
 		},
 		methods: {
-			changeSort(index, direction) {
+			changeSort(index, direction) {				
 				this.buttons[index].isActive = true;
 				this.buttons[index].direction = direction;
 				if(index != this.currentSortButton) {
@@ -105,42 +105,42 @@
 					this.currentSortButton = index;
 				}
 			},
-			askPermission(index) {
-				this.$refs.dialogWindow.ask(this.studentsList[index].fullName, "student", index);
+			askPermission(student) {
+				this.$refs.dialogWindow.ask(student, "student");
 			},
-			deleteStudent(index) {
-				this.studentsList.splice(index, 1);
+			deleteStudent(student) {
+				this.$emit("delete-student", student);
 			},
 			activeForm(index) {
 				if(typeof index == "number") {
-					this.$refs.form.active("change", this.studentsList[index], index);
+					this.$refs.form.active("change", this.itemsList[index], index);
 				} else
 					this.$refs.form.active("create");
 			},
 			addStudent(student) {
-				this.$emit("addStudent", student);
+				this.$emit("add-student", student);
 			},
 			changeStudent(student) {
-				this.$emit("changeStudent", student);
+				this.$emit("change-student", student);
 			}
 		},
 		computed: {
 			groups() {
-				return [...new Set(this.studentsList.map(item => item.group))].sort();
+				return [...new Set(this.itemsList.map(item => item.group))].sort();
 			},
 			allGroups() {
-				let tmp = [...new Set(this.studentsList.map(item => item.group))].sort();
+				let tmp = [...new Set(this.itemsList.map(item => item.group))].sort();
 				tmp.unshift('Все группы');
 				return tmp;
 			},
 			getStudentsList() {
-				let propertyName = Object.keys(this.studentsList[0])[this.currentSortButton];
+				let propertyName = Object.keys(this.itemsList[0])[this.currentSortButton + 1];
 				let tmpList;
 
-				if(this.buttons[this.currentSortButton].direction == "descending")
-					tmpList = this.studentsList.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+				if(this.buttons[this.currentSortButton].direction)
+					tmpList = this.itemsList.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
 				else 
-					tmpList = this.studentsList.sort((a, b) => a[propertyName] > b[propertyName] ? -1 : 1);
+					tmpList = this.itemsList.sort((a, b) => a[propertyName] > b[propertyName] ? -1 : 1);
 					
 				if(this.group == 'Все группы')
 					return tmpList;

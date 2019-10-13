@@ -1,15 +1,19 @@
 <template>
-	<div class="list-item" v-bind:class="{ 'list-item_active' : isActive }">
+	<div 
+		class="list-item" 
+		v-bind:class="{ 'list-item_active_on' : isActive }"
+	>
 		<div class="item-values-list">
 			<span 
 				class="item-value"
-				v-for="value in item"
+				v-for="value in item.getValues()"
 				v-bind:key='value.key'
 			>{{ value }}</span>
 			<ItemMenu 
 				v-on:delete-item='deleteItem'
 				v-on:change-item='changeItem'
 				v-on:active-item='activeItem'
+				v-on:disable-item='disableItem'
 			/>
 		</div>
 		<div class="underline"></div>
@@ -18,6 +22,7 @@
 
 <script>
 import ItemMenu from '../components/ItemMenu'
+
 
 export default {
 	name: 'ListItem',
@@ -30,13 +35,16 @@ export default {
 	},
 	methods: {
 		deleteItem() {
-			this.$emit("delete-item", this.index);
+			this.$emit("delete-item", this.item);
 		},
 		changeItem() {
 			this.$emit("change-item", this.index);
 		},
 		activeItem() {
 			this.isActive = !this.isActive;
+		},
+		disableItem() {
+			setTimeout(() => this.isActive = false, 200);
 		}
 	}
 }
@@ -110,10 +118,11 @@ export default {
 		}
 
 		&_active {
-			background-color: #ECECF4;
 			
-			.item-menu {
-				display: inline-block;
+			&_on {
+				.item-menu {
+					display: inline-block;
+				}
 			}
 		}
 	}

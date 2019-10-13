@@ -2,11 +2,11 @@ export default class Student {
 	constructor(id, fullName, group, formOfEducation, dateOfBirth, avgMark, isDebtor) {
 		this.id = id;
 		this.fullName = fullName;
-		this.avgMark = avgMark;
+		this.group = group;
 		this.formOfEducation = formOfEducation;
 		this.dateOfBirth = dateOfBirth;
+		this.avgMark = avgMark;
 		this.isDebtor = isDebtor;
-		this.group = group;
 	}
 	getAge() {
 		return Math.floor((new Date() - this.dateOfBirth) / (1000 * 60 * 60 * 24) / 31 / 12);

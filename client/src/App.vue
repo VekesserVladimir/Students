@@ -18,9 +18,10 @@
 		</div>
 		<div class="content">
 			<router-view 
-				v-bind:studentsList="currentPage == 'students' ? getStudentsList : groupsList"
-				v-on:addStudent='addStudent'
-				v-on:changeStudent='changeStudent'
+				v-bind:itemsList="currentPage == 'students' ? getStudentsList : groupsList"
+				v-on:add-student='addStudent'
+				v-on:change-student='changeStudent'
+				v-on:delete-student='deleteStudent'
 			></router-view>
 		</div>
 	</div>
@@ -84,14 +85,15 @@
 				this.groupsList.forEach(group => {
 					group.listOfStudents.forEach((item, index) => {
 						if(item.id == student.id) {
-							console.log(group.listOfStudents[index]);
-
 							group.listOfStudents.splice(index, 1, student);
-
-							console.log(group.listOfStudents[index]);
 						}
 					})
 				})
+			},
+			deleteStudent(student) {
+				let groupIndex = this.groupsList.findIndex(group => group.specialty == student.group);
+				let studentIndex = this.groupsList[groupIndex].listOfStudents.findIndex(elem => elem.id == student.id);
+				this.groupsList[groupIndex].listOfStudents.splice(studentIndex, 1);
 			}
 		},
 		computed: {
