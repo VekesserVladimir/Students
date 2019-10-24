@@ -67,7 +67,6 @@ export default {
 			border-radius: 5px;
 			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 			position: absolute;
-			left: -85px;
 			top: 19px;
 			z-index: 2;
 			transform-origin: top right;
@@ -114,7 +113,6 @@ export default {
 			background-color: #FEFCFE;
 			border: none;
 			box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
-			margin-left: 36px;
 			display: flex;
 			justify-content: center;
 			padding: 0;

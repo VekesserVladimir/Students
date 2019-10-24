@@ -4,7 +4,7 @@
 			ref='dialogWindow' 
 			v-on:answer='deleteStudent'
 		/>
-		<Form 
+		<StudentForm 
 			ref='form'
 			v-bind:groups='groups'
 			v-on:addStudent='addStudent'
@@ -47,7 +47,7 @@
 	import ColumnButton from '../components/ColumnButton';
 	import ListItem from '../components/ListItem';
 	import DialogWindow from '../components/DialogWindow';
-	import Form from '../components/Form';
+	import StudentForm from '../components/StudentForm';
 
 	export default {
 		name: 'StudentsList',
@@ -55,7 +55,7 @@
 			ColumnButton,
 			ListItem,
 			DialogWindow,
-			Form
+			StudentForm
 		},
 		props: [ "itemsList", "list" ],
 		data() {

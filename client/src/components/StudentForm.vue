@@ -72,7 +72,6 @@
 <script>
 import DatePicker from 'vuejs-datepicker';
 import ru from 'vuejs-datepicker/dist/locale/translations/ru'
-import { faSortDown, faSortUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Student from "../entities/Student"
 
 export default {
@@ -155,7 +154,7 @@ export default {
 										  this.group, 
 										  this.formOfEducation, 
 										  this.dateOfBirth, 
-										  this.avgMark, 
+										  +this.avgMark, 
 										  this.isDebtor == "отсутствуют" ? false : true);
 				this.isActive = false;
 				this.fullName = "";
@@ -164,9 +163,10 @@ export default {
 				this.dateOfBirth = "";
 				this.avgMark = "";
 				this.isDebtor = "отсутствуют";
-				if(this.mode == "create") {
+				if(this.mode == "create") 
 					this.$emit("addStudent", student);
-				} else this.$emit("changeStudent", student);
+				else 
+						this.$emit("changeStudent", student);
 			}
 		}
 	}

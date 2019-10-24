@@ -1,24 +1,24 @@
 <template>
-	<div class='students-list'>
+	<div class='groups-list'>
 		<DialogWindow 
 			ref='dialogWindow' 
-			v-on:answer='deleteStudent'
+			v-on:answer='deleteGroup'
 		/>
-		<Form 
+		<GroupForm 
 			ref='form'
-			v-on:addStudent='addStudent'
-			v-on:changeStudent='changeStudent'
+			v-on:addGroup='addGroup'
+			v-on:changeGroup='changeGroup'
 		/>
-		<div class='students-list__row'>
-			<span class="students-list__title">Список групп</span>
+		<div class='groups-list__row'>
+			<span class="groups-list__title">Список групп</span>
 			<button
-				class="button button_primary students-list__button"
+				class="button button_primary groups-list__button"
 				v-on:click='activeForm'
 			>
 				Добавить группу
 			</button>
 		</div>
-		<div class="table-header students-list__table-header">
+		<div class="table-header groups-list__table-header">
 			<ColumnButton 
 				v-for='(button, index) in buttons'
 				v-bind:button="button"
@@ -31,7 +31,7 @@
 		<ListItem 
 			v-for='(group, index) in getGroupsList' 
 			v-bind:key='group.id' 
-			v-bind:item="group.getValues()"
+			v-bind:item="group"
 			v-bind:index='index'
 			v-on:delete-item='askPermission'
 			v-on:change-item='activeForm'
@@ -43,45 +43,51 @@
 	import ColumnButton from '../components/ColumnButton';
 	import ListItem from '../components/ListItem';
 	import DialogWindow from '../components/DialogWindow';
-	import Form from '../components/Form';
+	import GroupForm from '../components/GroupForm';
 
 	export default {
-		name: 'StudentsList',
+		name: 'GroupsList',
 		components: {
 			ColumnButton,
 			ListItem,
 			DialogWindow,
-			Form
+			GroupForm
 		},
+		props: [ "itemsList" ],
 		data() {
 			return {
 				buttons: [
 					{
 						name: 'Направление',
 						isActive: true,
-						direction: "descending"
+						direction: true
 					},
 					{
-						name: "Кол-во студентов",
+						name: 'Количество студентов',
 						isActive: false,
-						direction: "descending"
+						direction: true
 					},
 					{
-						name: "Кол-во должников",
+						name: 'Количество должников',
 						isActive: false,
-						direction: "descending"
+						direction: true
 					},
 					{
-						name: "Средний балл",
+						name: 'Средний балл',
 						isActive: false,
-						direction: "descending"
+						direction: true
+					},
+					{
+						name: 'Форма обучения',
+						isActive: false,
+						direction: true
 					}
 				],
 				currentSortButton: 0
 			}
 		},
 		methods: {
-			changeSort(index, direction) {
+			changeSort(index, direction) {				
 				this.buttons[index].isActive = true;
 				this.buttons[index].direction = direction;
 				if(index != this.currentSortButton) {
@@ -89,50 +95,52 @@
 					this.currentSortButton = index;
 				}
 			},
-			askPermission(index) {
-				this.$refs.dialogWindow.ask(this.studentsList[index].fullName, "student", index);
+			askPermission(group) {
+				this.$refs.dialogWindow.ask(group, "group");
 			},
-			deleteStudent(index) {
-				this.studentsList.splice(index, 1);
+			deleteGroup(group) {
+				this.$emit("delete-group", group);
 			},
 			activeForm(index) {
 				if(typeof index == "number") {
-					this.$refs.form.active("change", this.studentsList[index], index);
+					this.$refs.form.active("change", this.itemsList[index]);
 				} else
 					this.$refs.form.active("create");
 			},
-			addStudent(student) {
-				this.studentsList.push(student);
+			addGroup(group) {
+				this.$emit("add-group", group);
 			},
-			changeStudent(student, index) {
-				this.studentsList.splice(index, 1, student);
+			changeGroup(group) {
+				this.$emit("change-group", group);
 			}
 		},
 		computed: {
 			getGroupsList() {
-				let propertyName = Object.keys(this.groupsList[0])[this.currentSortButton];
+				let propertyName = this.itemsList[this.currentSortButton + 1].getValues();
+				let tmpList;
 
-				if(this.buttons[this.currentSortButton].direction == "descending") 
-					return this.groupsList.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
+				if(this.buttons[this.currentSortButton].direction)
+					return this.itemsList.sort((a, b) => a[propertyName] > b[propertyName] ? 1 : -1);
 				else 
-					return this.groupsList.sort((a, b) => a[propertyName] > b[propertyName] ? -1 : 1);
+					return this.itemsList.sort((a, b) => a[propertyName] > b[propertyName] ? -1 : 1);
+					
 			}
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-	.students-list {
+	.groups-list {
 		padding-top: 32px;
 
 		&__button {
-			margin-left: auto;
+			margin-left: 766px;
 		}
 
 		&__row {
 			display: flex;
 			align-items: center;
-			padding: 0 73px 0 45px
+			padding-left: 45px;
 		}
 
 		&__title {
@@ -145,21 +153,18 @@
 		&__dropdown {
 			margin: 2px 434px 0 50px;
 		}
-		.students-list__table-header {
+		.groups-list__table-header {
 			button:nth-child(2) {
-				margin-left: 295px;
+				margin-left: 65px;
 			}
 			button:nth-child(3) {
-				margin-left: 84px;
+				margin-left: 65px;
 			}
 			button:nth-child(4) {
-				margin-left: 50px;
+				margin-left: 65px;
 			}
 			button:nth-child(5) {
-				margin-left: 45px;
-			}
-			button:nth-child(6) {
-				margin-left: 47px;
+				margin-left: 65px;
 			}
 		}
 
