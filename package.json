@@ -1,56 +1,23 @@
 {
   "name": "students",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
   "scripts": {
-    "dev": "vue-cli-service serve --open client/src/main.js",
-    "build": "vue-cli-service build --inline-vue client/src/main.js",
-    "lint": "vue-cli-service lint"
+    "start": "concurrently \"nodemon server/index.js\" \"cd client && npm run serve\""
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ALotOfNthing/Students.git"
+  },
+  "author": "Vekesser Vladimir <vekesser_vladimir@mail.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ALotOfNthing/Students/issues"
+  },
+  "homepage": "https://github.com/ALotOfNthing/Students#readme",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.22",
-    "@fortawesome/free-solid-svg-icons": "^5.10.2",
-    "@fortawesome/vue-fontawesome": "^0.1.7",
-    "express": "^4.17.1",
-    "mongodb": "^3.3.3",
-    "vue": "^2.6.10",
-    "vue-click-outside": "^1.0.7",
-    "vue-router": "^3.0.3",
-    "vue-visible": "^1.0.2",
-    "vuejs-datepicker": "^1.6.2"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-eslint": "^3.11.0",
-    "@vue/cli-service": "^3.11.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "less": "^3.0.4",
-    "less-loader": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential"
-    ],
-    "rules": {
-      "no-console": 0
-    },
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+    "concurrently": "^5.0.0",
+    "express": "^4.17.1"
+  }
 }
