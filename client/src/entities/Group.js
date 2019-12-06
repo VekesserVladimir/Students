@@ -1,5 +1,5 @@
 export default class Group {
-	constructor(id, specialty, typeOfStudy, course, listOfStudents, ) {
+	constructor(id, specialty, typeOfStudy, course, listOfStudents) {
 		this.id = id;
 		this.specialty = specialty;
 		this.typeOfStudy = typeOfStudy;

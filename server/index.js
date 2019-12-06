@@ -1,9 +1,6 @@
 const server = require("express")();
+const bodyParser = require('body-parser')
+const cors = require('cors')
 
-server.get('/', (request, responce) => {
-	responce.send("asd");
-})
-
-server.listen(3000, err => {
-	console.log("Server has been started");
-});
+server.use(bodyParser.json())
+server.use(cors())

@@ -14,7 +14,7 @@
 			<div class="form__row">
 				<div class="form__row-name">Форма обучения</div>
 				<select 
-					class="dropdown" 
+					class="dropdown"
 					v-model='formOfEducation'
 					v-bind:class="{ 'dropdown__error' : errors.formOfEducation }"
 				>
@@ -40,7 +40,6 @@ export default {
 			item: undefined,
 			isActive: false,
 			mode: "",
-			item: "",
 			id: "",
 			specialty: "",
 			formOfEducation: "очная",
@@ -77,14 +76,24 @@ export default {
 			}
 
 			if(!flag) {
-				let group = new Group(	this.id,
+				let group;
+				if(this.mode == 'change') {
+						group = new Group(	this.id,
 										this.specialty, 
 										this.item.typeOfStudy,
 										this.item.course,
 										this.item.listOfStudents.map(student => {
-											student.formOfEducation = this.formOfEducation;
-										    return student;
+												student.formOfEducation = this.formOfEducation;
+											return student;
 										}));
+					} else {
+						group = new Group(	0,
+											this.specialty, 
+											this.formOfEducation,
+											this.specialty.slice(-2, 1),
+											[]
+										)
+				}
 				this.isActive = false;
 				this.specialty = "";
 				this.formOfEducation = "очная";
